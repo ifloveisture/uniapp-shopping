@@ -1,0 +1,97 @@
+{
+	"pages": [{
+		"path": "pages/home/home",
+		"style": {
+			"navigationBarTitleText": "首页",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/cate/cate",
+		"style": {
+			"navigationBarTitleText": "分类",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/cart/cart",
+		"style": {
+			"navigationBarTitleText": "购物车",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/mine/mine",
+		"style": {
+			"navigationBarTitleText": "我的",
+			"enablePullDownRefresh": false
+		}
+
+	}],
+	"tabBar": {
+		"selectedColor": "#d81e06",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"text": "首页",
+				"iconPath": "static/icon/home.png",
+				"selectedIconPath": "static/icon/home_active.png"
+			},
+			{
+				"pagePath": "pages/cate/cate",
+				"text": "分类",
+				"iconPath": "static/icon/category.png",
+				"selectedIconPath": "static/icon/category_active.png"
+			},
+			{
+				"pagePath": "pages/cart/cart",
+				"text": "购物车",
+				"iconPath": "static/icon/cart.png",
+				"selectedIconPath": "static/icon/cart_active.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/icon/mine.png",
+				"selectedIconPath": "static/icon/mine_active.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "天码优购",
+		"navigationBarBackgroundColor": "#d81e06",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	},
+	"subPackages": [{
+		"root": "subpkg",
+		"pages": [{
+				"path": "goods_detail/goods_detail",
+				"style": {
+					"navigationBarTitleText": "商品详情"
+				}
+			},
+			{
+				"path": "goods_list/goods_list",
+				"style": {
+					"navigationBarTitleText": "商品列表"
+				}
+			}, {
+				"path": "search/search",
+				"style": {
+					"navigationBarTitleText": "搜索",
+					"enablePullDownRefresh": false
+				}
+
+			}
+		]
+	}],
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^u-(.*)": "@/uni_modules/uni-view/components/u-$1/u-$1.vue"
+		}
+	}
+}
