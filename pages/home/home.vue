@@ -120,6 +120,12 @@
 		width: 100%;
 	}
 
+	.search-box {
+		position: sticky;
+		top: 0;
+		z-index: 999;
+	}
+
 	.nav-list {
 		display: flex;
 		justify-content: space-around;

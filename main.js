@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import { $http } from '@escook/request-miniprogram'
+import install from 'uni_modules/uni-view/index.js'
 
 Vue.config.productionTip = false
 

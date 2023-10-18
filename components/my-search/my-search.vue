@@ -1,7 +1,7 @@
 <template>
 	<view class="my-search-container" :style="{backgroundColor: bgcolor}">
 		<view class="my-search-box" :style="{borderRadius: radius + 'px'}" @click="handleSearch">
-			<uni-icons type="search" size=17></uni-icons>
+			<u-icon name="search" size="17" color="#fff"></u-icon>
 			<text class="placeholder">搜索</text>
 		</view>
 	</view>
@@ -19,11 +19,6 @@
 				type: Number,
 				default: 18
 			}
-		},
-		data() {
-			return {
-
-			};
 		},
 		methods: {
 			handleSearch() {
