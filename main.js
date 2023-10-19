@@ -17,11 +17,11 @@ $http.afterRequest = function () {
 	uni.hideLoading()
 }
 uni.$http = $http
-uni.$message = function ({msg, time, icon}) {
+uni.$message = function (title) {
 	uni.showToast({
-		title: msg,
-		duration: time,
-		icon
+		title,
+		duration: 5000,
+		icon: null
 	});
 }
 
