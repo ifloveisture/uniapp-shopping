@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import { $http } from '@escook/request-miniprogram'
 import install from 'uni_modules/uni-view/index.js'
+import store from 'store/index.js';
 
 Vue.config.productionTip = false
 
@@ -28,7 +29,8 @@ uni.$message = function (title) {
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+		store
 })
 app.$mount()
 // #endif

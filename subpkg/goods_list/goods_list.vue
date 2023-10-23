@@ -2,7 +2,7 @@
 	<view>
 		<view class="goods-list">
 			<block v-for="(goods,index) in goodsList" :key="index">
-				<my-goods :goods="goods"></my-goods>
+				<my-goods @click-goods="handleClickGoods()" :goods="goods"></my-goods>
 			</block>
 		</view>
 	</view>
@@ -29,8 +29,8 @@
 			this.getGoodsList();
 		},
 		onReachBottom() {
-			if(this.query.pagenum * this.query.pagesize >= this.total) return uni.$message('数据加载完毕');
-			if(this.isLoading) return;
+			if (this.query.pagenum * this.query.pagesize >= this.total) return uni.$message('数据加载完毕');
+			if (this.isLoading) return;
 
 			this.query.pagenum++;
 			this.getGoodsList();
@@ -51,14 +51,32 @@
 				this.isLoading = false;
 				cb && cb();
 				if (res.meta.status !== 200) return uni.$message('数据请求失败');
-				this.goodsList = [...this.goodsList, ...res.message.goods];
+				let list = this.handleData(res.message.goods);
+				this.goodsList = [...this.goodsList, ...list];
 				this.total = res.message.total;
-				console.log(this.goodsList);
+			},
+			handleData(oldList = []) {
+				let newList = [];
+				oldList.forEach((item) => {
+					let obj = {
+						id: item.goods_id,
+						name: item.goods_name,
+						price: item.goods_price,
+						small_logo: item.goods_small_logo
+					};
+					newList.push(obj);
+				});
+				return newList;
+			},
+			handleClickGoods(e) {
+				uni.navigateTo({
+					url: `/subpkg/goods_detail/goods_detail?goods_id=${e.id}`
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	
+
 </style>

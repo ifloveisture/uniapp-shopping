@@ -1,12 +1,14 @@
 <template>
 	<view class="goods" @click="handleClick(goods)">
 		<view class="left">
-			<image :src="goods.goods_small_logo || defaultPic" class="pic"></image>
+			<radio @click="handleSelect()" :checked="goods.state" color="#c00000" v-if="selectable"></radio>
+			<image :src="goods.small_logo || defaultPic" class="pic"></image>
 		</view>
 		<view class="right">
-			<view class="name">{{ goods.goods_name }}</view>
+			<view class="name">{{ goods.name }}</view>
 			<view class="info">
-				<view class="price">￥{{ goods.goods_price | toFixed}}</view>
+				<view class="price">￥{{ goods.price | toFixed}}</view>
+				<u-number-box @blur="watchInput" v-if="numControl" :min="1" v-model="number" @change="numChange"></u-number-box>
 			</view>
 		</view>
 	</view>
@@ -19,6 +21,14 @@
 			goods: {
 				type: Object,
 				default: {}
+			},
+			selectable: {
+				type: Boolean,
+				default: false
+			},
+			numControl: {
+				type: Boolean,
+				default: false
 			}
 		},
 		filters: {
@@ -28,14 +38,29 @@
 		},
 		data() {
 			return {
-				defaultPic: 'https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png'
+				defaultPic: 'https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png',
+				number: 1
 			};
 		},
 		methods: {
 			handleClick(item) {
-				uni.navigateTo({
-					url: `/subpkg/goods_detail/goods_detail?goods_id=${item.goods_id}`
+				this.$emit('clickGoods',{id: item.id});
+			},
+			handleSelect() {
+				this.$emit('select',{
+					id: this.goods.id,
+					state: !this.goods.state
+				});
+			},
+			numChange(val) {
+				this.$emit('num-change',{
+					id: this.goods.id,
+					num: ++val
 				})
+			},
+			watchInput() {
+				let result = parseInt(this.number);
+				if(!result) this.number = 1;
 			}
 		}
 	}
@@ -43,11 +68,16 @@
 
 <style lang="scss">
 	.goods {
+		width: 750rpx;
+		box-sizing: border-box;
 		display: flex;
 		padding: 10px 5px;
 		border-bottom: 1px solid #f0f0f0;
 
 		.left {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 			margin-right: 5px;
 
 			.pic {
@@ -64,6 +94,12 @@
 
 			.name {
 				font-size: 13px;
+			}
+			
+			.info {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 			}
 
 			.price {

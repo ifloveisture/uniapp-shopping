@@ -44,7 +44,10 @@
 </template>
 
 <script>
+	import badgeMix from '@/mixins/badge.js';
+
 	export default {
+		mixins: [badgeMix],
 		data() {
 			return {
 				cateList: [],

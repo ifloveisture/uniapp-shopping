@@ -36,7 +36,10 @@
 </template>
 
 <script>
+	import badgeMix from '@/mixins/badge.js';
+
 	export default {
+		mixins: [badgeMix],
 		data() {
 			return {
 				swiperList: [],
@@ -48,11 +51,7 @@
 			async getSwiperList() {
 				let result = await uni.$http.get('/api/public/v1/home/swiperdata');
 				if (result.statusCode !== 200) {
-					uni.$meaasge({
-						msg: '数据请求失败',
-						time: 1500,
-						icon: 'none'
-					});
+					uni.$meaasge('数据请求失败');
 				} else {
 					this.swiperList = result.data.message;
 				}
@@ -65,11 +64,7 @@
 			async getNavList() {
 				let result = await uni.$http.get('/api/public/v1/home/catitems');
 				if (result.statusCode !== 200) {
-					uni.$meaasge({
-						msg: '数据请求失败',
-						time: 1500,
-						icon: 'none'
-					});
+					uni.$meaasge('数据请求失败');
 				} else {
 					this.navList = result.data.message;
 				}
@@ -82,11 +77,7 @@
 			async getFloorList() {
 				let result = await uni.$http.get('/api/public/v1/home/floordata');
 				if (result.statusCode !== 200) {
-					uni.$meaasge({
-						msg: '数据请求失败',
-						time: 1500,
-						icon: 'none'
-					});
+					uni.$meaasge('数据请求失败');
 				} else {
 					this.floorList = result.data.message;
 				}

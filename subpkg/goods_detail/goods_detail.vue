@@ -24,7 +24,26 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations,
+		mapGetters
+	} from 'vuex'
+
 	export default {
+		computed: {
+			...mapState('cart', ['list']),
+			...mapGetters('cart', ['total']),
+		},
+		watch: {
+			total: {
+				handler(newVal) {
+					let result = this.options.find(item => item.text == '购物车');
+					if (result) result.info = newVal;
+				},
+				immediate: true
+			},
+		},
 		data() {
 			return {
 				info: {},
@@ -57,6 +76,7 @@
 			this.getGoodsDetail(gid);
 		},
 		methods: {
+			...mapMutations('cart', ['addItem']),
 			async getGoodsDetail(gid) {
 				const {
 					data: res
@@ -78,10 +98,23 @@
 				this.isStared = !this.isStared;
 			},
 			onClick(e) {
-			  if(e.content.text === '购物车') {
+				if (e.content.text === '购物车') {
 					uni.switchTab({
 						url: '/pages/cart/cart'
 					});
+				}
+			},
+			buttonClick(e) {
+				if (e.content.text == '加入购物车') {
+					const goods = {
+						id: this.info.goods_id,
+						name: this.info.goods_name,
+						price: this.info.goods_price,
+						count: 1,
+						small_logo: this.info.goods_small_logo,
+						state: true
+					}
+					this.addItem(goods);
 				}
 			},
 		}
@@ -92,14 +125,14 @@
 	.goods-detail {
 		padding-bottom: 50px;
 	}
-	
+
 	.goods_nav {
-	  position: fixed;
-	  bottom: 0;
-	  left: 0;
-	  width: 100%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
 	}
-	
+
 	swiper {
 		height: 750rpx;
 
