@@ -1,7 +1,3 @@
-import {
-	forEach
-} from "core-js/library/js/array";
-
 export default {
 	namespaced: true,
 	state: () => {
@@ -27,6 +23,7 @@ export default {
 			}
 		},
 		changeGoodsCount(state, goods) {
+			console.log(goods)
 			let result = state.list.find((item) => item.id == goods.id);
 			if (result) {
 				result.count = goods.count;
@@ -43,19 +40,27 @@ export default {
 		checkAllState(state, newState) {
 			state.list.forEach(item => item.state = newState);
 			this.commit('cart/save');
-		}
+		},
 	},
 	getters: {
 		total(state) {
 			let count = 0;
+			console.log(state.list);
 			state.list.forEach((item) => {
-				console.log(item)
 				count += item.count;
 			});
 			return count;
 		},
 		amount(state) {
-		return state.list.filter(item => item.state).reduce((total,item) => total += item.price * item.count,0).toFixed(2);
+			return state.list.filter(item => item.state).reduce((total, item) => total += item.price * item.count, 0).toFixed(
+				2);
 		},
+		goodsNum(state) {
+			console.log('hh')
+			return (goods) => {
+				let result = state.list.find(item => item.id === goods.id);
+				if (result) return result.count;
+			}
+		}
 	}
 }

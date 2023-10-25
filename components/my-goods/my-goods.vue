@@ -15,6 +15,8 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+	
 	export default {
 		name: "my-goods",
 		props: {
@@ -36,10 +38,13 @@
 				return Number(num).toFixed(2);
 			}
 		},
+		computed: {
+			// ...mapGetters('cart',['goodsNum']),
+		},
 		data() {
 			return {
 				defaultPic: 'https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png',
-				number: 1
+				number: 0 //this.goodsNum(this.goods)
 			};
 		},
 		methods: {
@@ -52,13 +57,15 @@
 					state: !this.goods.state
 				});
 			},
-			numChange(val) {
+			numChange(e) {
 				this.$emit('num-change',{
 					id: this.goods.id,
-					num: ++val
+					num: e.value
 				})
 			},
 			watchInput() {
+				// console.log(this.$store.cart.getters.goodsNum)
+				console.log(this.$store['cart/goodsNum'])
 				let result = parseInt(this.number);
 				if(!result) this.number = 1;
 			}
