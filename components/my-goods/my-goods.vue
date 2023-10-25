@@ -8,15 +8,18 @@
 			<view class="name">{{ goods.name }}</view>
 			<view class="info">
 				<view class="price">￥{{ goods.price | toFixed}}</view>
-				<u-number-box @blur="watchInput" v-if="numControl" :min="1" v-model="number" @change="numChange"></u-number-box>
+				<u-number-box @blur="watchInput" v-if="numControl" :min="1" v-model="goodsNum"
+					@change="numChange"></u-number-box>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	
+	import {
+		mapState
+	} from 'vuex'
+
 	export default {
 		name: "my-goods",
 		props: {
@@ -39,35 +42,44 @@
 			}
 		},
 		computed: {
-			// ...mapGetters('cart',['goodsNum']),
+			...mapState('cart',['list']),
+			goodsNum: {
+				get() {
+					if(!this.numControl) return;
+					return this.list.find(item => this.goods.id === item.id).count;
+				},
+				set(newVal) {
+					this.num = this.list.find(item => this.goods.id === item.id).count;
+				}
+			}
 		},
 		data() {
 			return {
 				defaultPic: 'https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png',
-				number: 0 //this.goodsNum(this.goods)
+				num: 1
 			};
 		},
 		methods: {
 			handleClick(item) {
-				this.$emit('clickGoods',{id: item.id});
+				this.$emit('clickGoods', {
+					id: item.id
+				});
 			},
 			handleSelect() {
-				this.$emit('select',{
+				this.$emit('select', {
 					id: this.goods.id,
 					state: !this.goods.state
 				});
 			},
 			numChange(e) {
-				this.$emit('num-change',{
+				this.$emit('num-change', {
 					id: this.goods.id,
 					num: e.value
 				})
 			},
 			watchInput() {
-				// console.log(this.$store.cart.getters.goodsNum)
-				console.log(this.$store['cart/goodsNum'])
 				let result = parseInt(this.number);
-				if(!result) this.number = 1;
+				if (!result) this.number = 1;
 			}
 		}
 	}
@@ -102,7 +114,7 @@
 			.name {
 				font-size: 13px;
 			}
-			
+
 			.info {
 				display: flex;
 				justify-content: space-between;

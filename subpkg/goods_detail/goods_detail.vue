@@ -83,7 +83,7 @@
 				} = await uni.$http.get('/api/public/v1/goods/detail', {
 					goods_id: gid
 				});
-				if (res.meta.status !== 200) return uni.$message('数据请求失败');
+				if (res.meta.status !== 200) return uni.$error('数据请求失败');
 				res.message.goods_introduce = res.message.goods_introduce.replace(/<img /g, '<img style="display:block;" ')
 					.replace(/webp/g, 'jpg');
 				this.info = res.message;

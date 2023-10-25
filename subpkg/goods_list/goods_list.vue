@@ -29,7 +29,7 @@
 			this.getGoodsList();
 		},
 		onReachBottom() {
-			if (this.query.pagenum * this.query.pagesize >= this.total) return uni.$message('数据加载完毕');
+			if (this.query.pagenum * this.query.pagesize >= this.total) return uni.$success('数据加载完毕');
 			if (this.isLoading) return;
 
 			this.query.pagenum++;
@@ -50,7 +50,7 @@
 				} = await uni.$http.get('/api/public/v1/goods/search', this.query);
 				this.isLoading = false;
 				cb && cb();
-				if (res.meta.status !== 200) return uni.$message('数据请求失败');
+				if (res.meta.status !== 200) return uni.$error('数据请求失败');
 				let list = this.handleData(res.message.goods);
 				this.goodsList = [...this.goodsList, ...list];
 				this.total = res.message.total;

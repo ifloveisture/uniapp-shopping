@@ -62,7 +62,7 @@
 				} = await uni.$http.get('/api/public/v1/goods/qsearch', {
 					query: this.searchValue
 				});
-				if (res.meta.status !== 200) return uni.$message('数据请求失败');
+				if (res.meta.status !== 200) return uni.$error('数据请求失败');
 				this.searchResults = res.message;
 			},
 			getDetail(goods_id) {

@@ -52,11 +52,7 @@
 			async getCateList() {
 				let result = await uni.$http.get('/api/public/v1/categories');
 				if (result.statusCode !== 200) {
-					uni.$meaasge({
-						msg: '数据请求失败',
-						time: 1500,
-						icon: 'none'
-					});
+					uni.$error('数据请求失败');
 				} else {
 					this.cateList = result.data.message;
 				}
@@ -134,6 +130,10 @@
 				padding: 12rpx;
 				background-color: #fff;
 				margin: 10rpx;
+			}
+			
+			.u-waterfall {
+				// display: flex;
 			}
 		}
 	}

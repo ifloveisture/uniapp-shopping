@@ -23,10 +23,9 @@ export default {
 			}
 		},
 		changeGoodsCount(state, goods) {
-			console.log(goods)
 			let result = state.list.find((item) => item.id == goods.id);
 			if (result) {
-				result.count = goods.count;
+				result.count = goods.num;
 				this.commit('cart/save');
 			}
 		},
@@ -45,7 +44,6 @@ export default {
 	getters: {
 		total(state) {
 			let count = 0;
-			console.log(state.list);
 			state.list.forEach((item) => {
 				count += item.count;
 			});
@@ -55,12 +53,5 @@ export default {
 			return state.list.filter(item => item.state).reduce((total, item) => total += item.price * item.count, 0).toFixed(
 				2);
 		},
-		goodsNum(state) {
-			console.log('hh')
-			return (goods) => {
-				let result = state.list.find(item => item.id === goods.id);
-				if (result) return result.count;
-			}
-		}
 	}
 }

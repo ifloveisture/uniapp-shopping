@@ -20,14 +20,14 @@
 </template>
 
 <script>
-	import bagdgeMix from '@/mixins/badge.js';
+	import badgeMix from '@/mixins/badge.js';
 	import {
 		mapState,
 		mapMutations
 	} from 'vuex';
 
 	export default {
-		mixins: [bagdgeMix],
+		mixins: [badgeMix],
 		computed: {
 			...mapState('cart', ['list'])
 		},
@@ -48,9 +48,11 @@
 			},
 			handleNumChange(info) {
 				this.changeGoodsCount(info);
+				this.setBadge();
 			},
 			handleSwipeClick(goods) {
 				this.removeGoods(goods.id);
+				this.setBadge();
 			},
 		}
 	}
